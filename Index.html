@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ma Page Web Élégante</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> -->
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        var messages = document.getElementById('messages');
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('message', input.value);
+            }
+            input.value = '';
+        });
+
+        socket.on('message', function (msg) {
+            var item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Ma Page Élégante</h1>
+    </header>
+
+    <nav>
+        <a href="#">Accueil</a>
+        <a href="#">Services</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <section>
+        <h2>Section principale</h2>
+        <p>Ceci est le contenu principal de ma page web.</p>
+    </section>
+
+    <section>
+        <ul id="message"></ul>
+        <form id="form" action="">
+            <input id="input" autocomplete="off"><button>Envoyer</button>
+        </form>
+    </section>
+
+    <footer>
+        © 2023 Ma Page Élégante
+    </footer>
+</body>
+
+</html>
